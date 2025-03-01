@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compress your images online without losing quality. Fast, free, and easy to use!">
+  <title>Image Compressor</title>
+  <style>
+    /* CSS Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #ff6f61;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .affiliate-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .affiliate-section h2 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .affiliate-section p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .affiliate-section a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .affiliate-section a:hover {
+      text-decoration: underline;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .upload-label {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #ff6f61;
+      color: #fff;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .upload-label:hover {
+      background: #ff4a3d;
+    }
+
+    .output {
+      margin-top: 20px;
+    }
+
+    .output img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #download {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #28a745;
+      color: #fff;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: background 0.3s ease;
+    }
+
+    #download:hover {
+      background: #218838;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .tagline {
+        font-size: 1rem;
+      }
+
+      .upload-label {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression/dist/browser-image-compression.min.js"></script>
+  <script>
+    // JavaScript for Image Compression
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('upload').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          compressImage(file);
+        }
+      });
+
+      async function compressImage(file) {
+        const options = {
+          maxSizeMB: 1, // Maximum size in MB
+          maxWidthOrHeight: 1024, // Maximum width or height
+          useWebWorker: true, // Use web worker for better performance
+        };
+
+        try {
+          const compressedFile = await imageCompression(file, options);
+          const preview = document.getElementById('preview');
+          const downloadLink = document.getElementById('download');
+
+          // Display the compressed image
+          preview.src = URL.createObjectURL(compressedFile);
+          preview.style.display = 'block';
+
+          // Set the download link
+          downloadLink.href = URL.createObjectURL(compressedFile);
+          downloadLink.download = `compressed_${file.name}`;
+          downloadLink.style.display = 'inline-block';
+        } catch (error) {
+          console.error('Error compressing image:', error);
+          alert('An error occurred while compressing the image. Please try again.');
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Image Compressor</h1>
+    <p class="tagline">100% Free and Safe</p>
+    <p>Upload an image to compress it without losing quality.</p>
+
+    <!-- Affiliate Section -->
+    <div class="affiliate-section">
+      <h2>Recommended Tools</h2>
+      <p>Check out these amazing tools to enhance your productivity:</p>
+      <p><a href="https://example.com/affiliate-link-1" target="_blank">Tool 1</a> - Description of Tool 1.</p>
+      <p><a href="https://example.com/affiliate-link-2" target="_blank">Tool 2</a> - Description of Tool 2.</p>
+    </div>
+
+    <!-- File Upload -->
+    <label for="upload" class="upload-label">Choose Image</label>
+    <input type="file" id="upload" accept="image/*">
+
+    <!-- Output Section -->
+    <div class="output">
+      <img id="preview" src="#" alt="Compressed Image Preview" style="display:none;">
+      <a id="download" href="#" download style="display:none;">Download Compressed Image</a>
+    </div>
+  </div>
+</body>
+</html>
